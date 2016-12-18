@@ -1,4 +1,4 @@
-﻿@model Web.Models.Announcement
+﻿@model Web.Models.AnnouncementView
 
 @{
     ViewBag.Title = "Details";
@@ -11,40 +11,55 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Announcement.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Announcement.Title)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DateTime)
+            @Html.DisplayNameFor(model => model.Announcement.DateTime)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateTime)
+            @Html.DisplayFor(model => model.Announcement.DateTime)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Author)
+            @Html.DisplayNameFor(model => model.Announcement.Author)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Author)
+            @Html.DisplayFor(model => model.Announcement.Author)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Content)
+            @Html.DisplayNameFor(model => model.Announcement.Content)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Content)
+            @Html.DisplayFor(model => model.Announcement.Content)
         </dd>
 
     </dl>
 </div>
+
+<div id="commentsDiv">
+    @foreach (var item in Model.Comments)
+    {
+        <dl>
+            <dd>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </dd>
+            <dd>
+                @Html.DisplayFor(modelItem => item.Content)
+            </dd>
+       </dl>    
+    }
+</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Announcement.Id }) |
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("Comment this Announcement", "Create", "Comments", new { id = Model.Announcement.Id }, null)
 </p>

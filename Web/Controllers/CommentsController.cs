@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,7 +18,7 @@ namespace Web.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            return View(db.Comments.ToList());
+            return View(GetMyComments());
         }
 
         // GET: Comments/Details/5
@@ -46,13 +47,21 @@ namespace Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CommentId,DateTime,Author,Content,AnnouncementId")] Comment comment)
+        public ActionResult Create([Bind(Include = "CommentId,Author,Content")] Comment comment, int id)
         {
             if (ModelState.IsValid)
             {
+                string currentUserId = User.Identity.GetUserId();
+                ApplicationUser currentUser = db.Users.FirstOrDefault(
+                    x => x.Id == currentUserId);
+
+                comment.User = currentUser;
+                comment.DateTime = DateTime.Now;
+                comment.AnnouncementId = id;
+
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details/"+(id.ToString()),"Announcements");
             }
 
             return View(comment);
@@ -122,6 +131,15 @@ namespace Web.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private IEnumerable<Comment> GetMyComments()
+        {
+            //get user identity 
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(
+                x => x.Id == currentUserId);
+            return db.Comments.ToList().Where(x => x.User == currentUser);
         }
     }
 }

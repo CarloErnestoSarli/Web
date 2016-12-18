@@ -17,11 +17,8 @@ namespace Web.Controllers
 
         // GET: Announcements
         public ActionResult Index()
-        {
-            string currentUserId = User.Identity.GetUserId();
-            ApplicationUser currentUser = db.Users.FirstOrDefault(
-                x => x.Id == currentUserId);
-            return View(db.Announcements.ToList().Where(x => x.User == currentUser));
+        { 
+            return View();
         }
 
         // GET: Announcements/Details/5
@@ -36,7 +33,8 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(announcement);
+            AnnouncementView AV = populateAnnouncementViewModel((int)id);
+            return View(AV);
         }
 
         // GET: Announcements/Create
@@ -138,7 +136,11 @@ namespace Web.Controllers
 
         public ActionResult BuildAnnouncementTable()
         {
-            return PartialView("_AnnouncementTable", db.Announcements.ToList());
+            //get user identity 
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(
+                x => x.Id == currentUserId);
+            return PartialView("_AnnouncementTable", GetMyAnnouncements());
         }
 
         [HttpPost]
@@ -160,7 +162,7 @@ namespace Web.Controllers
 
             }
 
-            return PartialView("_AnnouncementsTable", db.Announcements.ToList());
+            return PartialView("_AnnouncementTable", GetMyAnnouncements());
         }
 
         //populate announcements with comments
@@ -171,6 +173,15 @@ namespace Web.Controllers
             AV.Announcement = db.Announcements.FirstOrDefault(x => x.Id == id);
             AV.Comments = db.Comments.Where(x => x.AnnouncementId == currentAnnouncementId).ToList();
             return AV;
+        }
+
+        private IEnumerable<Announcement> GetMyAnnouncements()
+        {
+            //get user identity 
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(
+                x => x.Id == currentUserId);
+            return db.Announcements.ToList().Where(x => x.User == currentUser);
         }
     }
 }
