@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
 {
@@ -10,6 +11,7 @@ namespace Web.Models
         public int CommentId { get; set; }
         public DateTime DateTime { get; set; }
         public String Author { get; set; }
+        [Required]
         public string Content { get; set; }
         //link to announcement db
         public int AnnouncementId { get; set; }
