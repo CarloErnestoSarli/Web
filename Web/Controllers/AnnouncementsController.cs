@@ -19,7 +19,7 @@ namespace Web.Controllers
         // GET: Announcements
         public ActionResult Index()
         {
-            if (User.IsInRole("Lecturer"))
+            if (User.IsInRole(RoleName.Lecturer))
             {
                 return View("Index");
             }else
@@ -46,6 +46,7 @@ namespace Web.Controllers
         }
 
         // GET: Announcements/Create
+        [Authorize(Roles = RoleName.Lecturer)]
         public ActionResult Create()
         {
             return View();
@@ -54,12 +55,12 @@ namespace Web.Controllers
         // POST: Announcements/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        
+        [Authorize(Roles = RoleName.Lecturer)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,DateTime,Author,Content")] Announcement announcement)
         {
-            if (User.IsInRole("Lecturer"))
+            if (User.IsInRole(RoleName.Lecturer))
             {
                 if (ModelState.IsValid)
                 {
@@ -83,9 +84,10 @@ namespace Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        
+
 
         // GET: Announcements/Edit/5
+        [Authorize(Roles = RoleName.Lecturer)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -103,6 +105,7 @@ namespace Web.Controllers
         // POST: Announcements/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = RoleName.Lecturer)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,DateTime,Author,Content")] Announcement announcement)
@@ -117,6 +120,7 @@ namespace Web.Controllers
         }
 
         // GET: Announcements/Delete/5
+        [Authorize(Roles = RoleName.Lecturer)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -132,6 +136,7 @@ namespace Web.Controllers
         }
 
         // POST: Announcements/Delete/5
+        [Authorize(Roles = RoleName.Lecturer)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -159,7 +164,7 @@ namespace Web.Controllers
             ApplicationUser currentUser = db.Users.FirstOrDefault(
                 x => x.Id == currentUserId);
             */
-            if (User.IsInRole("Lecturer"))
+            if (User.IsInRole(RoleName.Lecturer))
             {
                 return PartialView("_AnnouncementTable", GetMyAnnouncements());
             }
@@ -170,6 +175,7 @@ namespace Web.Controllers
            
         }
 
+        [Authorize(Roles = RoleName.Lecturer)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AJAXCreate([Bind(Include = "Id,Title,Author,Content")] Announcement announcement)
@@ -183,7 +189,7 @@ namespace Web.Controllers
                 announcement.User = currentUser;
                 //Setting the date automatically
                 announcement.DateTime = DateTime.Now;
-                announcement.Author = currentUser.UserName;
+                announcement.Author = currentUser.Name + " " + currentUser.Surname;
 
                 db.Announcements.Add(announcement);
                 db.SaveChanges();

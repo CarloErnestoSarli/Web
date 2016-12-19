@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44397</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201612191311019_seedUsers.Designer.cs">
       <DependentUpon>201612191311019_seedUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612191909146_addNameAndSurnameToApplicationUser.cs" />
+    <Compile Include="Migrations\201612191909146_addNameAndSurnameToApplicationUser.Designer.cs">
+      <DependentUpon>201612191909146_addNameAndSurnameToApplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -218,6 +222,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -314,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612191311019_seedUsers.resx">
       <DependentUpon>201612191311019_seedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612191909146_addNameAndSurnameToApplicationUser.resx">
+      <DependentUpon>201612191909146_addNameAndSurnameToApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -64,6 +64,12 @@ namespace Web.Models
 
     public class RegisterViewModel
     {
+        //Adding name and surname
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string Surname { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

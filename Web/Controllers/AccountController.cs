@@ -152,7 +152,12 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //Adding name and surname for registration
+                var user = new ApplicationUser { UserName = model.Email,
+                    Email = model.Email,
+                    Name = model.Name,
+                    Surname = model.Surname,
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
