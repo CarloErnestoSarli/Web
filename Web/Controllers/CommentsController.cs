@@ -142,5 +142,28 @@ namespace Web.Controllers
                 x => x.Id == currentUserId);
             return db.Comments.ToList().Where(x => x.User == currentUser);
         }
+        //Ajax used to create comments
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AjaxCreate([Bind(Include = "CommentId,Author,Content")] Comment comment, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                string currentUserId = User.Identity.GetUserId();
+                ApplicationUser currentUser = db.Users.FirstOrDefault(
+                    x => x.Id == currentUserId);
+
+                comment.User = currentUser;
+                comment.DateTime = DateTime.Now;
+                comment.Author = currentUser.Name + " " + currentUser.Surname;
+                comment.AnnouncementId = id;
+
+                db.Comments.Add(comment);
+                db.SaveChanges();
+                return RedirectToAction("Details/" + (id.ToString()), "Announcements");
+            }
+
+            return View(comment);
+        }
     }
 }
