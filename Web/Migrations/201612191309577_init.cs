@@ -3,7 +3,7 @@ namespace Web.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Web1 : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -12,10 +12,10 @@ namespace Web.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Title = c.String(),
+                        Title = c.String(nullable: false, maxLength: 244),
                         DateTime = c.DateTime(nullable: false),
                         Author = c.String(),
-                        Content = c.String(),
+                        Content = c.String(nullable: false),
                         User_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
@@ -87,7 +87,7 @@ namespace Web.Migrations
                         CommentId = c.Int(nullable: false, identity: true),
                         DateTime = c.DateTime(nullable: false),
                         Author = c.String(),
-                        Content = c.String(),
+                        Content = c.String(nullable: false),
                         AnnouncementId = c.Int(nullable: false),
                         User_Id = c.String(maxLength: 128),
                     })

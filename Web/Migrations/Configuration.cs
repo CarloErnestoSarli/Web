@@ -4,9 +4,6 @@ namespace Web.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Web.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Web.Models.ApplicationDbContext>
     {
@@ -29,16 +26,6 @@ namespace Web.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
-            AddUsers(context);
-        }
-
-        void AddUsers(Web.Models.ApplicationDbContext context)
-        {
-            var user = new ApplicationUser { UserName = "user1@email.com" };
-            var um = new UserManager<ApplicationUser>(
-                new UserStore<ApplicationUser>(context));
-            um.Create(user, "Password");
         }
     }
 }

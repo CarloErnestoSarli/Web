@@ -9,7 +9,7 @@ namespace Web.Models
     public class Announcement
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter a Title" )]
         [StringLength(244)]
         public String Title { get; set; }
         public DateTime DateTime { get; set; }

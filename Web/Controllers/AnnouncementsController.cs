@@ -15,6 +15,7 @@ namespace Web.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        
         // GET: Announcements
         public ActionResult Index()
         { 
@@ -156,6 +157,7 @@ namespace Web.Controllers
                 announcement.User = currentUser;
                 //Setting the date automatically
                 announcement.DateTime = DateTime.Now;
+                announcement.Author = currentUser.UserName;
 
                 db.Announcements.Add(announcement);
                 db.SaveChanges();

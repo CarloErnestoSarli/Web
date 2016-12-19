@@ -50,11 +50,15 @@
     {
         <dl>
             <dd>
+                @Html.DisplayFor(modelItem => item.Author)
+            </dd>
+            <dd>
                 @Html.DisplayFor(modelItem => item.DateTime)
             </dd>
             <dd>
                 @Html.DisplayFor(modelItem => item.Content)
             </dd>
+           
        </dl>    
     }
 </div>

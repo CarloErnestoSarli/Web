@@ -57,6 +57,7 @@ namespace Web.Controllers
 
                 comment.User = currentUser;
                 comment.DateTime = DateTime.Now;
+                comment.Author = currentUser.UserName;
                 comment.AnnouncementId = id;
 
                 db.Comments.Add(comment);
