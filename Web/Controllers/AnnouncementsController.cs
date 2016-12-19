@@ -18,8 +18,15 @@ namespace Web.Controllers
         
         // GET: Announcements
         public ActionResult Index()
-        { 
-            return View();
+        {
+            if (User.IsInRole("Lecturer"))
+            {
+                return View("Index");
+            }else
+            {
+                return View("IndexStudent");
+            }
+            
         }
 
         // GET: Announcements/Details/5
@@ -137,11 +144,21 @@ namespace Web.Controllers
 
         public ActionResult BuildAnnouncementTable()
         {
+            /*
             //get user identity 
             string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = db.Users.FirstOrDefault(
                 x => x.Id == currentUserId);
-            return PartialView("_AnnouncementTable", GetMyAnnouncements());
+            */
+            if (User.IsInRole("Lecturer"))
+            {
+                return PartialView("_AnnouncementTable", GetMyAnnouncements());
+            }
+            else
+            {
+                return PartialView("_AnnouncementTableStudent", db.Announcements.ToList());
+            }
+           
         }
 
         [HttpPost]
