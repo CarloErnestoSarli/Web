@@ -54,27 +54,36 @@ namespace Web.Controllers
         // POST: Announcements/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,DateTime,Author,Content")] Announcement announcement)
         {
-            if (ModelState.IsValid)
+            if (User.IsInRole("Lecturer"))
             {
-                //get user identity 
-                string currentUserId = User.Identity.GetUserId();
-                ApplicationUser currentUser = db.Users.FirstOrDefault(
-                    x => x.Id == currentUserId);
-                announcement.User = currentUser;
-                //Setting the date automatically
-                announcement.DateTime = DateTime.Now;
+                if (ModelState.IsValid)
+                {
+                    //get user identity 
+                    string currentUserId = User.Identity.GetUserId();
+                    ApplicationUser currentUser = db.Users.FirstOrDefault(
+                        x => x.Id == currentUserId);
+                    announcement.User = currentUser;
+                    //Setting the date automatically
+                    announcement.DateTime = DateTime.Now;
 
-                db.Announcements.Add(announcement);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    db.Announcements.Add(announcement);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                return View(announcement);
             }
-
-            return View(announcement);
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
+        
 
         // GET: Announcements/Edit/5
         public ActionResult Edit(int? id)
