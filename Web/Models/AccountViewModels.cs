@@ -8,6 +8,14 @@ namespace Web.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        //add name and surname to social login form
+        [Required]
+        [StringLength(255)]
+        public string Name { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string Surname { get; set; }
     }
 
     public class ExternalLoginListViewModel
