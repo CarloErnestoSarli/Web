@@ -41,6 +41,15 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (!User.IsInRole(RoleName.Lecturer))
+            {
+                string currentUserId = User.Identity.GetUserId();
+                ApplicationUser currentUser = db.Users.FirstOrDefault(
+                    x => x.Id == currentUserId);
+
+                 
+            }
             AnnouncementView AV = populateAnnouncementViewModel((int)id);
             return View(AV);
         }
@@ -209,6 +218,16 @@ namespace Web.Controllers
             return AV;
         }
 
+        public Viewed pupulateViewedModel(int id)
+        {
+            Viewed VD = new Viewed();
+            int currentAnnouncementId = id;
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(
+                x => x.Id == currentUserId);
+            //VD.Students = currentUser;
+            return VD;
+        }
         private IEnumerable<Announcement> GetMyAnnouncements()
         {
             //get user identity 

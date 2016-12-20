@@ -13,7 +13,11 @@
             <dd>
                 @Html.DisplayFor(modelItem => item.Content)
             </dd>
-
+            <dd>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CommentId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CommentId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CommentId })
+            </dd>
         </dl>
     }
 

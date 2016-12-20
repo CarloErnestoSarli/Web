@@ -45,7 +45,8 @@
     </dl>
 </div>
 
-<div id="commentsDiv">
+
+    
     @foreach (var item in Model.Comments)
     {
         <dl>
@@ -61,6 +62,7 @@
            
        </dl>    
     }
+<div id="commentsDiv"></div>
     <div id="commentCreateForm">
         @using (Ajax.BeginForm("AJAXCreate", "Comments", new { id = Model.Announcement.Id }, new AjaxOptions
         {
@@ -91,7 +93,7 @@
 
         }
     </div>
-</div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Announcement.Id }) |
     @Html.ActionLink("Back to List", "Index") |

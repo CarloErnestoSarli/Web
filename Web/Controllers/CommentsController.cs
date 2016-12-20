@@ -176,7 +176,7 @@ namespace Web.Controllers
             ApplicationUser currentUser = db.Users.FirstOrDefault(
                 x => x.Id == currentUserId);
             */
-            return PartialView("_CommentTable", db.Comments.ToList());
+            return PartialView("_CommentTable", db.Comments.Where(x => x.AnnouncementId == id).ToList());
 
         }
     }
