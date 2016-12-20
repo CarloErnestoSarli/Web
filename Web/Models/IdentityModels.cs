@@ -36,6 +36,8 @@ namespace Web.Models
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<ViewedPost> ViewedPosts { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
