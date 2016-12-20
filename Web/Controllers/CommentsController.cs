@@ -160,10 +160,24 @@ namespace Web.Controllers
 
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Details/" + (id.ToString()), "Announcements");
+                //return RedirectToAction("Details/" + (id.ToString()), "Announcements");
+                //return RedirectToAction("_CommentTable", db.Comments.Where(x => x.AnnouncementId == id).ToList());
             }
 
-            return View(comment);
+            //return View(comment);
+            return PartialView("_CommentTable", db.Comments.Where(x => x.AnnouncementId == id).ToList());
+        }
+
+        public ActionResult BuildCommentTable(int id)
+        {
+            /*
+            //get user identity 
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(
+                x => x.Id == currentUserId);
+            */
+            return PartialView("_CommentTable", db.Comments.ToList());
+
         }
     }
 }
