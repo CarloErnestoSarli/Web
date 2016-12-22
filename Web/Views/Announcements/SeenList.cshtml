@@ -1,18 +1,15 @@
-﻿@model Web.Models.ViewedPost
+﻿@model IEnumerable<Web.Models.ViewedPost>
 @{
     ViewBag.Title = "SeenList";
 }
 
 <h2>SeenList</h2>
 
-@foreach (var item in Model.Students)
+@foreach (var item in Model)
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
+            @Html.DisplayFor(modelItem => item.User)
         </td>
 
     </tr>

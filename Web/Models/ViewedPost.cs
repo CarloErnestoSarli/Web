@@ -11,7 +11,6 @@ namespace Web.Models
         [Key]
         public int ViewedId { get; set; }
         public int AnnouncementId { get; set; }
-        public bool Seen { get; set; }
-        public List<ApplicationUser> Students { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

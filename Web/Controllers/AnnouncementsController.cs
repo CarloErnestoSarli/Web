@@ -30,7 +30,7 @@ namespace Web.Controllers
         }
 
         // GET: Announcements/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(ViewedPost viewedPost,int? id)
         {
             if (id == null)
             {
@@ -41,14 +41,20 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            //if user is not a lecturer add seen announcement to seen table
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(
+                x => x.Id == currentUserId);
+
+            //if user is not a lecturer add it to the ViewwedPost db
             if (!User.IsInRole(RoleName.Lecturer))
             {
-                ViewedPost VD = pupulateViewedModel((int)id);
-                //return View(VD);
-
-                 
+                announcement.User = currentUser;
+                viewedPost.User = currentUser;
+                viewedPost.AnnouncementId = (int)id;
+                db.ViewedPosts.Add(viewedPost);
+                db.SaveChanges();
             }
+           
             AnnouncementView AV = populateAnnouncementViewModel((int)id);
             return View(AV);
         }
@@ -89,7 +95,7 @@ namespace Web.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("NotAuthorised");
             }
         }
 
@@ -166,18 +172,14 @@ namespace Web.Controllers
 
         public ActionResult BuildAnnouncementTable()
         {
-            /*
-            //get user identity 
-            string currentUserId = User.Identity.GetUserId();
-            ApplicationUser currentUser = db.Users.FirstOrDefault(
-                x => x.Id == currentUserId);
-            */
+           
             if (User.IsInRole(RoleName.Lecturer))
             {
                 return PartialView("_AnnouncementTable", GetMyAnnouncements());
             }
             else
             {
+                //return table with limited access for students
                 return PartialView("_AnnouncementTableStudent", db.Announcements.ToList());
             }
            
@@ -216,16 +218,7 @@ namespace Web.Controllers
             AV.Comments = db.Comments.Where(x => x.AnnouncementId == currentAnnouncementId).ToList();
             return AV;
         }
-        //add student who have seen the announcement to the viewed model
-        public ViewedPost pupulateViewedModel(int id)
-        {
-            ViewedPost VD = new ViewedPost();
-            int currentAnnouncementId = id;
-            VD.Seen = true;
-            string currentUserId = User.Identity.GetUserId();
-            VD.Students = db.Users.Where(x => x.Id == currentUserId).ToList();
-            return VD;
-        }
+       
         private IEnumerable<Announcement> GetMyAnnouncements()
         {
             //get user identity 
@@ -235,26 +228,14 @@ namespace Web.Controllers
             return db.Announcements.ToList().Where(x => x.User == currentUser);
         }
 
-        //generate the list of users that have seen the announcement
-        public ActionResult SeenList(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Announcement announcement = db.Announcements.Find(id);
-            if (announcement == null)
-            {
-                return HttpNotFound();
-            }
-            //if user is not a lecturer add seen announcement to seen table
-            //if (!User.IsInRole(RoleName.Lecturer))
-            //{
-                ViewedPost VD = pupulateViewedModel((int)id);
 
-            //}
-            //Viewed V = new Models.Viewed();
-            return View(VD);
+        //generate the list of users that have seen the announcement
+        [Authorize(Roles = RoleName.Lecturer)]
+        public ActionResult SeenList(ViewedPost viewedPost)
+        {
+
+            return View(viewedPost);
         }
+        
     }
 }

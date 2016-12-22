@@ -223,6 +223,46 @@
     <Compile Include="Migrations\201612201713204_seenAddedDb.Designer.cs">
       <DependentUpon>201612201713204_seenAddedDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612211433190_seenAddedDb2.cs" />
+    <Compile Include="Migrations\201612211433190_seenAddedDb2.Designer.cs">
+      <DependentUpon>201612211433190_seenAddedDb2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612211443386_seenAddedDb3.cs" />
+    <Compile Include="Migrations\201612211443386_seenAddedDb3.Designer.cs">
+      <DependentUpon>201612211443386_seenAddedDb3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612212029357_seenAddedDb4.cs" />
+    <Compile Include="Migrations\201612212029357_seenAddedDb4.Designer.cs">
+      <DependentUpon>201612212029357_seenAddedDb4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612221045044_seededUsersandLecturer.cs" />
+    <Compile Include="Migrations\201612221045044_seededUsersandLecturer.Designer.cs">
+      <DependentUpon>201612221045044_seededUsersandLecturer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612221047473_seededUsersandLecturer1.cs" />
+    <Compile Include="Migrations\201612221047473_seededUsersandLecturer1.Designer.cs">
+      <DependentUpon>201612221047473_seededUsersandLecturer1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612221050170_seededUsersandLecturer2.cs" />
+    <Compile Include="Migrations\201612221050170_seededUsersandLecturer2.Designer.cs">
+      <DependentUpon>201612221050170_seededUsersandLecturer2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612221059127_seededUsersandLecturer3.cs" />
+    <Compile Include="Migrations\201612221059127_seededUsersandLecturer3.Designer.cs">
+      <DependentUpon>201612221059127_seededUsersandLecturer3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612221100291_seededUsersandLecturer4.cs" />
+    <Compile Include="Migrations\201612221100291_seededUsersandLecturer4.Designer.cs">
+      <DependentUpon>201612221100291_seededUsersandLecturer4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612221105170_seededUsersandLecturer5.cs" />
+    <Compile Include="Migrations\201612221105170_seededUsersandLecturer5.Designer.cs">
+      <DependentUpon>201612221105170_seededUsersandLecturer5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612221106131_seededUsersandLecturer6.cs" />
+    <Compile Include="Migrations\201612221106131_seededUsersandLecturer6.Designer.cs">
+      <DependentUpon>201612221106131_seededUsersandLecturer6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -254,8 +294,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -320,6 +365,12 @@
     <Content Include="Views\Announcements\_AnnouncementTableStudent.cshtml" />
     <Content Include="Views\Comments\_CommentTable.cshtml" />
     <Content Include="Views\Announcements\SeenList.cshtml" />
+    <Content Include="Views\ViewedPosts\Create.cshtml" />
+    <Content Include="Views\ViewedPosts\Delete.cshtml" />
+    <Content Include="Views\ViewedPosts\Details.cshtml" />
+    <Content Include="Views\ViewedPosts\Edit.cshtml" />
+    <Content Include="Views\ViewedPosts\Index.cshtml" />
+    <Content Include="Views\Shared\NotAuthorised.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -330,7 +381,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612191309577_init.resx">
@@ -347,6 +397,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612201713204_seenAddedDb.resx">
       <DependentUpon>201612201713204_seenAddedDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612211433190_seenAddedDb2.resx">
+      <DependentUpon>201612211433190_seenAddedDb2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612211443386_seenAddedDb3.resx">
+      <DependentUpon>201612211443386_seenAddedDb3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612212029357_seenAddedDb4.resx">
+      <DependentUpon>201612212029357_seenAddedDb4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221045044_seededUsersandLecturer.resx">
+      <DependentUpon>201612221045044_seededUsersandLecturer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221047473_seededUsersandLecturer1.resx">
+      <DependentUpon>201612221047473_seededUsersandLecturer1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221050170_seededUsersandLecturer2.resx">
+      <DependentUpon>201612221050170_seededUsersandLecturer2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221059127_seededUsersandLecturer3.resx">
+      <DependentUpon>201612221059127_seededUsersandLecturer3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221100291_seededUsersandLecturer4.resx">
+      <DependentUpon>201612221100291_seededUsersandLecturer4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221105170_seededUsersandLecturer5.resx">
+      <DependentUpon>201612221105170_seededUsersandLecturer5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221106131_seededUsersandLecturer6.resx">
+      <DependentUpon>201612221106131_seededUsersandLecturer6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

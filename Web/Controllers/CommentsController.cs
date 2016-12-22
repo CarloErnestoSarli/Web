@@ -47,23 +47,31 @@ namespace Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CommentId,Author,Content")] Comment comment, int id)
+        public ActionResult Create([Bind(Include = "CommentId,Author,Content")] Comment comment, int? id)
         {
-            if (ModelState.IsValid)
+            if(id == null)
             {
-                string currentUserId = User.Identity.GetUserId();
-                ApplicationUser currentUser = db.Users.FirstOrDefault(
-                    x => x.Id == currentUserId);
-
-                comment.User = currentUser;
-                comment.DateTime = DateTime.Now;
-                comment.Author = currentUser.Name + " " + currentUser.Surname;
-                comment.AnnouncementId = id;
-
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                return RedirectToAction("Details/"+(id.ToString()),"Announcements");
+                RedirectToAction("Index", "Announcements");
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    string currentUserId = User.Identity.GetUserId();
+                    ApplicationUser currentUser = db.Users.FirstOrDefault(
+                        x => x.Id == currentUserId);
+
+                    comment.User = currentUser;
+                    comment.DateTime = DateTime.Now;
+                    comment.Author = currentUser.Name + " " + currentUser.Surname;
+                    comment.AnnouncementId = (int)id;
+
+                    db.Comments.Add(comment);
+                    db.SaveChanges();
+                    return RedirectToAction("Details/" + (id.ToString()), "Announcements");
+                }
+            }
+
 
             return View(comment);
         }
@@ -71,6 +79,10 @@ namespace Web.Controllers
         // GET: Comments/Edit/5
         public ActionResult Edit(int? id)
         {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(
+                x => x.Id == currentUserId);
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,7 +92,15 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(comment);
+
+            if (comment.User == currentUser)
+            {
+                return View(comment);
+            }
+            else
+            {
+                return View("NotAuthorised");
+            }
         }
 
         // POST: Comments/Edit/5
@@ -90,13 +110,19 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CommentId,DateTime,Author,Content,AnnouncementId")] Comment comment)
         {
+            
+
             if (ModelState.IsValid)
             {
+
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+                
             }
-            return View(comment);
+
+                return View(comment);
+
         }
 
         // GET: Comments/Delete/5
@@ -168,15 +194,16 @@ namespace Web.Controllers
             return PartialView("_CommentTable", db.Comments.Where(x => x.AnnouncementId == id).ToList());
         }
 
-        public ActionResult BuildCommentTable(int id)
+        public ActionResult BuildCommentTable()
         {
             /*
             //get user identity 
             string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = db.Users.FirstOrDefault(
                 x => x.Id == currentUserId);
+               
             */
-            return PartialView("_CommentTable", db.Comments.Where(x => x.AnnouncementId == id).ToList());
+            return PartialView("_CommentTable", db.Comments.ToList());
 
         }
     }
