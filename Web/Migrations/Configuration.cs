@@ -80,13 +80,15 @@ namespace Web.Migrations
             };
             um.Create(user6, "password");
 
+            var userId = um.FindByName(user6.UserName);
+
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
             if (!roleManager.RoleExists(RoleName.Lecturer))
             {
                 roleManager.Create(new IdentityRole(RoleName.Lecturer));
             }
-            um.AddToRole(user6.Id, RoleName.Lecturer);
+            um.AddToRole(userId.Id, RoleName.Lecturer);
         }
 
        

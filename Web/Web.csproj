@@ -263,6 +263,14 @@
     <Compile Include="Migrations\201612221106131_seededUsersandLecturer6.Designer.cs">
       <DependentUpon>201612221106131_seededUsersandLecturer6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612221619540_seededUsersandLecturer7.cs" />
+    <Compile Include="Migrations\201612221619540_seededUsersandLecturer7.Designer.cs">
+      <DependentUpon>201612221619540_seededUsersandLecturer7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612221622075_seededUsersandLecturer8.cs" />
+    <Compile Include="Migrations\201612221622075_seededUsersandLecturer8.Designer.cs">
+      <DependentUpon>201612221622075_seededUsersandLecturer8.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -427,6 +435,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612221106131_seededUsersandLecturer6.resx">
       <DependentUpon>201612221106131_seededUsersandLecturer6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221619540_seededUsersandLecturer7.resx">
+      <DependentUpon>201612221619540_seededUsersandLecturer7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221622075_seededUsersandLecturer8.resx">
+      <DependentUpon>201612221622075_seededUsersandLecturer8.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

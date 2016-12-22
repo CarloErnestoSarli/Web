@@ -51,7 +51,7 @@ namespace Web.Controllers
         {
             if(id == null)
             {
-                RedirectToAction("Index", "Announcements");
+                return RedirectToAction("Index", "Announcements");
             }
             else
             {
@@ -137,6 +137,7 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(comment);
         }
 
@@ -145,10 +146,23 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.FirstOrDefault(
+                x => x.Id == currentUserId);
+
             Comment comment = db.Comments.Find(id);
-            db.Comments.Remove(comment);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            
+            if (comment.User == currentUser)
+            {
+                db.Comments.Remove(comment);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("NotAuthorised");
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

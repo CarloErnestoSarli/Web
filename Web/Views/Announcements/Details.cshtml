@@ -101,7 +101,7 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Announcement.Id }) |
     @Html.ActionLink("Back to List", "Index") |
     @Html.ActionLink("Comment this Announcement", "Create", "Comments", new { id = Model.Announcement.Id }, null) |
-    @Html.ActionLink("Seen by", "SeenList", "Announcements")
+    @Html.ActionLink("Seen by", "SeenList", "Announcements", new { id = Model.Announcement.Id }, null)
 </p>
 
 @section Scripts {

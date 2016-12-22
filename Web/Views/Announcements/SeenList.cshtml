@@ -5,12 +5,26 @@
 
 <h2>SeenList</h2>
 
+<div id="seenBar">
+    <p>@(ViewBag.Percent)%</p>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" 
+             style="width:@(Html.AttributeEncode(ViewBag.Percent))%">
+
+        </div>
+    </div>
+</div>
+
+
 @foreach (var item in Model)
 {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.User)
-        </td>
+    <dl>
+        <dd>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </dd>
+        <dd>
+            @Html.DisplayFor(modelItem => item.User.Name)
+        </dd>
 
-    </tr>
+    </dl>
 }

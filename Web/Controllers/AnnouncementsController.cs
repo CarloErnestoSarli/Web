@@ -45,14 +45,26 @@ namespace Web.Controllers
             ApplicationUser currentUser = db.Users.FirstOrDefault(
                 x => x.Id == currentUserId);
 
+            
+
             //if user is not a lecturer add it to the ViewwedPost db
             if (!User.IsInRole(RoleName.Lecturer))
             {
-                announcement.User = currentUser;
-                viewedPost.User = currentUser;
-                viewedPost.AnnouncementId = (int)id;
-                db.ViewedPosts.Add(viewedPost);
-                db.SaveChanges();
+                var tmp = db.ViewedPosts.Any(x => x.AnnouncementId == id && x.User.Id == currentUserId);
+        
+                if (tmp)
+                {
+                    //do nothing the student is already in there
+                }
+                else
+                {                   
+                    announcement.User = currentUser;
+                    viewedPost.User = currentUser;
+                    viewedPost.AnnouncementId = (int)id;
+                    db.ViewedPosts.Add(viewedPost);
+                    db.SaveChanges();
+                }
+
             }
            
             AnnouncementView AV = populateAnnouncementViewModel((int)id);
@@ -113,7 +125,14 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(announcement);
+            if (CanYou((int)id))
+            {
+                return View(announcement);
+            }
+            else
+            {
+                return View("NotAuthorised");
+            }
         }
 
         // POST: Announcements/Edit/5
@@ -146,7 +165,15 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(announcement);
+            if (CanYou((int)id))
+            {
+                return View(announcement);
+            }
+            else
+            {
+                return View("NotAuthorised");
+            }
+            
         }
 
         // POST: Announcements/Delete/5
@@ -175,7 +202,7 @@ namespace Web.Controllers
            
             if (User.IsInRole(RoleName.Lecturer))
             {
-                return PartialView("_AnnouncementTable", GetMyAnnouncements());
+                return PartialView("_AnnouncementTable", db.Announcements.ToList());
             }
             else
             {
@@ -206,7 +233,7 @@ namespace Web.Controllers
 
             }
 
-            return PartialView("_AnnouncementTable", GetMyAnnouncements());
+            return PartialView("_AnnouncementTable", db.Announcements.ToList());
         }
 
         //populate announcements with comments
@@ -231,11 +258,47 @@ namespace Web.Controllers
 
         //generate the list of users that have seen the announcement
         [Authorize(Roles = RoleName.Lecturer)]
-        public ActionResult SeenList(ViewedPost viewedPost)
+        public ActionResult SeenList(ViewedPost viewedPost, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                return View("SeenList", GetSeen(id));
+            }
+           
+            return View("SeenList", GetSeen(id));
+        }
+
+        public bool CanYou(int id)
+        {
+            if (GetMyAnnouncements().Any(x => x.Id == id))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+
+        private IEnumerable<ViewedPost> GetSeen(int id)
         {
 
-            return View(viewedPost);
+            IEnumerable<ViewedPost> seenPosts = db.ViewedPosts.Where(x => x.AnnouncementId == id).ToList();
+            IEnumerable<ApplicationUser> students = db.Users.ToList(); //Where(x=> x.Roles.Equals(RoleName.Lecturer)).ToList();
+            int counter = 0;
+            foreach (ApplicationUser student in students)
+            {
+                if(seenPosts.Any(x => x.User.Id == student.Id))
+                {
+                    counter++;
+                }
+            }
+
+            ViewBag.Percent = Math.Round(100f * ((float)counter / (float)students.Count()));
+
+            return seenPosts;
         }
-        
+
     }
 }
